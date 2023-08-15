@@ -7,10 +7,14 @@ import Home from './Home';
 import Post from './Post';
 import EditPost from './EditPost';
 
+
+
 function App() {
+  
 
   return (
-    <BrowserRouter>
+    
+      <BrowserRouter>
       <Navbar/>
       <Routes>
       <Route path="/" element={<Home />}></Route>
@@ -20,7 +24,8 @@ function App() {
         <Route path="/post/:id" element={<Post />}></Route>
         <Route path="/edit/:id" element={<EditPost />}></Route>
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    
   )
 }
 

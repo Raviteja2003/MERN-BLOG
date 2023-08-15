@@ -40,7 +40,7 @@ const login = async (req,res) => {
             }
             const user = await userModel.findOne({email});
             //console.log(user);
-            const token = await jwt.sign({id:user._id},process.env.SECRET_KEY);
+            const token = await jwt.sign({id:user._id,email:user.email,name:user.name},process.env.SECRET_KEY);
             //console.log(token);
             res.json({status:true,token})
 
@@ -50,4 +50,12 @@ const login = async (req,res) => {
     }
 }
 
-module.exports = {register,login};
+const home = async (req,res) => {
+    try {
+        await res.json({email:req.email,name:req.name});
+    } catch (error) {
+        res.json({error: "some error occured"})
+    }
+}
+
+module.exports = {register,login,home};
