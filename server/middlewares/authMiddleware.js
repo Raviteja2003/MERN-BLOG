@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
+import jwt from "jsonwebtoken";
 
-const verifyUser = async (req,res,next) => {
+export const verifyUser = async (req,res,next) => {
     const headers = req.headers.authorization;
     const token = headers?.split(" ")[1];
 
@@ -12,8 +12,8 @@ const verifyUser = async (req,res,next) => {
         if(isVerified)
         {
             req.userId = isVerified.id;
-            req.email = isVerified.email;
             req.name = isVerified.name;
+            req.email = isVerified.email;
             next();
         }
         else {
@@ -25,4 +25,3 @@ const verifyUser = async (req,res,next) => {
 
 }
 
-module.exports = {verifyUser};

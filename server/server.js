@@ -1,23 +1,35 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require("./db/config")
-const cors = require('cors');
-
+import express from "express";
+import cors from "cors";
+import connectDB from "./db/connectDB.js";
+import dotenv from "dotenv";
+import authRouter from "./routes/authRoutes.js";
 
 dotenv.config();
-connectDB();
-
 
 const app = express();
-app.use(express.json());
-app.use('*',cors({
+const PORT = process.env.PORT||5000;
+
+app.use(
+    '*',
+    cors({
     origin:true,
     credentials:true
-}))
+}));
+app.use(express.json());
 
-app.use("/api/auth",require("./routes/authRoutes"))
 
-app.listen(3001,()=>{
-    console.log("server is running on port 3001");
-})
+app.use("/api/auth",authRouter)
+
+const start = async () => {
+    try {
+      await connectDB();
+      app.listen(PORT, () => {
+        console.log(`Server listening on port ${PORT}`);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  start();
 
